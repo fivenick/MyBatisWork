@@ -1,0 +1,30 @@
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
+public class FridgeJDKProxy implements InvocationHandler{
+	private Object target;
+	@Override
+	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+		// TODO Auto-generated method stub
+		openDoor();
+		Object result = method.invoke(target, args);
+		closeDoor();
+		return result;
+	}
+	private void openDoor() {
+		System.out.println("´ò¿ª±ùÏä¡£¡£¡£¡£");
+	}
+	private void closeDoor() {
+		System.out.println("¹Ø±Õ±ùÏä¡£¡£¡£¡£");
+	}
+	public Object getProxy(Object target) {
+		this.target = target;
+		return Proxy.newProxyInstance(target.getClass().getClassLoader(), target.getClass().getInterfaces(), this);
+	}
+	public static void main(String args[]) {
+		AnimalOperation elephantOperation = (AnimalOperation)new FridgeJDKProxy();
+		elephantOperation.put();
+		elephantOperation.get();
+	}
+}
