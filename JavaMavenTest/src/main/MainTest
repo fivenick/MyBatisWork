@@ -1,0 +1,7 @@
+public class MainTes{
+    private int a;
+
+    {
+        a = 0;
+    }
+}
